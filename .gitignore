@@ -1,32 +1,63 @@
-# Prerequisites
-*.d
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <math.h>
+#include <map>
+#include <set>
+#include <sstream>
+#include <cstring>
+using namespace std;
+typedef unsigned long long ull;
+const double EPS = 1e-9;
+typedef long double ld;
+#define ll          long long
+#define  mod        1000000007 
+#define ll_min      LLONG_MIN
+#define ll_max      LLONG_MAX
+#define endl        "\n"
+#define all(v)      v.begin(),v.end()
+#define sz(s)	    (int)(s.size())
+#define clr(arr,x)  memset(arr,x,sizeof(arr))
+const ll INF = 2e18;
+#define format(n) fixed<<setprecision(n)
+void WEZaa() {
+	std::ios_base::sync_with_stdio(0);
+	cin.tie(NULL);
+	cout.tie(NULL);
+}
+int arr[100100][4];
+int mem[100100][4];
+int n=0;
+int dp(char c, int i)
+{
+	if (i == n)
+		return 0;
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+	int &ret =mem[i][int(c-'a')];
 
-# Precompiled Headers
-*.gch
-*.pch
+	if (ret != -1)
+		return ret;
+	
+	ret = 0;
+	if (c != 'a')
+		ret = max(ret, arr[i][0] + dp('a',i + 1));
+	
+	if (c != 'b')
+		ret = max(ret, arr[i][1] + dp('b',i + 1));
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+	if (c != 'c')
+		ret = max(ret, arr[i][2] + dp('c', i + 1));
+	return ret;
+}
+int main()
+{
+    WEZaa();
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		cin >> arr[i][0] >> arr[i][1] >> arr[i][2];
+	}
+	clr(mem, -1);
+	cout << dp('d', 0) << endl;
+}
